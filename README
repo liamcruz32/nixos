@@ -1,0 +1,7 @@
+Nix-OS Flake Configuration for Lenvovo Thinkpad T550
+
+OS: NixOS 22.05 - (Unstable)
+CPU: Intel i7-5600U (3.2GHz)
+GPU: Intel HD Graphics 5500
+
+Generation: 3

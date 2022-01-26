@@ -12,10 +12,19 @@
     gnome.gnome-tweaks
     gnomeExtensions.dash-to-dock
     gnomeExtensions.vitals
+    gnomeExtensions.arcmenu
     gnomeExtensions.workspace-indicator
     gnomeExtensions.clipboard-indicator
-    gnomeExtensions.worksets
     gnomeExtensions.coverflow-alt-tab
+    adapta-gtk-theme
+    paper-gtk-theme
+    vimix-gtk-themes
+    orchis-theme
+    gruvbox-dark-gtk
+    luna-icons
+    zafiro-icons
+    material-icons
+    vimix-icon-theme
   ];
   environment.gnome.excludePackages = with pkgs; [ 
     gnome-photos

@@ -11,8 +11,8 @@
      
       # WM Nixfiles
       ##############
-      # ./wm/gnome.nix
-      ./wm/xfce.nix
+      ./wm/gnome.nix
+      # ./wm/xfce.nix
       # ./wm/i3.nix
 
       # User Accounts

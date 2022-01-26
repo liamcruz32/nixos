@@ -5,7 +5,7 @@
     home = "/home/admin";
     extraGroups = ["wheel" "networkmanager"];
   };
-  
+
   home-manager.useGlobalPkgs = true;
   home-manager.users.admin = {pkgs, ...}: {
     nixpkgs.config.allowUnfree = true;
@@ -147,14 +147,6 @@
         set -gq display-panes-colour "#444444"
         set -gq display-panes-active-colour "#5E8D87"
       '';
-    };
-    programs.urxvt = {
-      enable = true;
-      fonts = ["xft:mononoki Nerd Font Mono:style=Regular:size=13"];
-      scroll.bar.enable = false;
-      extraConfig = {
-        internalBorder = 5;
-      };
     };
     xresources.extraConfig = ''
       !! Colorscheme

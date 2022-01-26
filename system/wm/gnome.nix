@@ -20,8 +20,6 @@
     zafiro-icons
   ];
   environment.gnome.excludePackages = with pkgs; [ 
-    gnome-photos
-    gnome.gnome-music
     epiphany
     gnome.gnome-characters
     gnome.totem

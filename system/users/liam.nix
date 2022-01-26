@@ -147,49 +147,41 @@
         set -gq pane-active-border-style "fg=#5E8D87, bg=#111111"
 
         set -gq pane-border-style "fg=#444444,bg=#111111"
-        set -gq pane-active-border-style "fg=#5E8D87,bg=#111111"
+        set -gq pane-active-border-style "fg=#ee66aa,bg=#111111"
         set -gq display-panes-colour "#444444"
         set -gq display-panes-active-colour "#5E8D87"
       '';
     };
-    programs.urxvt = {
-      enable = true;
-      fonts = ["xft:mononoki Nerd Font Mono:style=Regular:size=13"];
-      scroll.bar.enable = false;
-      extraConfig = {
-        internalBorder = 5;
-      };
-    };
     xresources.extraConfig = ''
-      !! Colorscheme
-      *foreground: #eeffff
-      *background: #111111
-      !
-      ! ! black
-      *color0: #111111
-      *color8: #444444
-      ! ! red
-      *color1:#A54242
-      *color9: #CC6666
-      ! ! green
-      *color2: #AAFFAA
-      *color10:#55BB55
+    #   !! Colorscheme
+    #   *foreground: #eeffff
+    #   *background: #111111
+    #   !
+    #   ! ! black
+    #   *color0: #111111
+    #   *color8: #444444
+    #   ! ! red
+    #   *color1:#A54242
+    #   *color9: #CC6666
+    #   ! ! green
+    #   *color2: #AAFFAA
+    #   *color10:#55BB55
       
-      ! ! yellow
-      *color3: #DE935F
-      *color11: #F0C674
-      ! ! blue
-      *color4: #1188AA
-      *color12: #1188AA
-      ! ! magenta
-      *color5: #85678F
-      *color13: #B294BB
-      ! ! cyan
-      *color6: #5E8D87
-      *color14: #8ABEB7
-      ! ! white
-      *color7: #ffffff
-      *color15: #eeffff
-    '';
+    #   ! ! yellow
+    #   *color3: #DE935F
+    #   *color11: #F0C674
+    #   ! ! blue
+    #   *color4: #1188AA
+    #   *color12: #1188AA
+    #   ! ! magenta
+    #   *color5: #85678F
+    #   *color13: #B294BB
+    #   ! ! cyan
+    #   *color6: #5E8D87
+    #   *color14: #8ABEB7
+    #   ! ! white
+    #   *color7: #ffffff
+    #   *color15: #eeffff
+    # '';
   };
 }

@@ -16,20 +16,12 @@
     gnomeExtensions.workspace-indicator
     gnomeExtensions.clipboard-indicator
     gnomeExtensions.coverflow-alt-tab
-    adapta-gtk-theme
-    paper-gtk-theme
-    vimix-gtk-themes
     orchis-theme
-    gruvbox-dark-gtk
-    luna-icons
     zafiro-icons
-    material-icons
-    vimix-icon-theme
   ];
   environment.gnome.excludePackages = with pkgs; [ 
     gnome-photos
     gnome.gnome-music
-    gnome.gnome-terminal
     epiphany
     gnome.gnome-characters
     gnome.totem

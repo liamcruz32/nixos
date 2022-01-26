@@ -4,14 +4,14 @@
   services = {
     xserver = {
       enable = true;
-      desktopManager.plasma5.enable = true;
+      desktopManager.xfce.enable = true;
+      desktopManager.xterm.enable = false;
     };
   };
   environment.systemPackages = with pkgs; [
-    kde-gtk-config
     adapta-gtk-theme
     paper-gtk-theme
-    vimix-gtk-theme
+    vimix-gtk-themes
     orchis-theme
     gruvbox-dark-gtk
     luna-icons

@@ -4,11 +4,11 @@
   environment.systemPackages = with pkgs; [
     # Utilities
     ############
-    gnupg git gnumake xorg.xev wget pulseaudio pavucontrol
+    gnupg git gnumake xorg.xev wget
 
     # Tools
     ########
-    tmux vim neofetch p7zip rxvt-unicode
+    tmux vim p7zip rxvt-unicode
   ];
 
   nixpkgs.config.permittedInsecurePackages = [

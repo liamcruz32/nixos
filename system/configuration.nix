@@ -12,7 +12,7 @@
       # WM Nixfiles
       ##############
       # ./wm/gnome.nix
-      ./wm/kde.nix
+      ./wm/xfce.nix
       # ./wm/i3.nix
 
       # User Accounts

@@ -7,13 +7,10 @@
     [ 
       ./hardware-configuration.nix
       ./systempackages.nix
-      #<home-manager/nixos>
      
       # WM Nixfiles
       ##############
       ./wm/gnome.nix
-      # ./wm/xfce.nix
-      # ./wm/i3.nix
 
       # User Accounts
       ################

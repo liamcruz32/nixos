@@ -13,10 +13,16 @@
     gnomeExtensions.dash-to-dock
     gnomeExtensions.vitals
     gnomeExtensions.arcmenu
+    gnomeExtensions.gtk-title-bar
     gnomeExtensions.workspace-indicator
     gnomeExtensions.clipboard-indicator
     gnomeExtensions.coverflow-alt-tab
     orchis-theme
+    ant-theme
+    paper-gtk-theme
+    nordic
+    adapta-gtk-theme
+    paper-icon-theme
     zafiro-icons
   ];
   environment.gnome.excludePackages = with pkgs; [ 

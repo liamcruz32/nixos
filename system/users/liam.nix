@@ -35,6 +35,7 @@
         vim-fugitive
         vim-nix
         fzf-vim
+        papercolor-theme
       ];
       settings = {
         expandtab = true;
@@ -45,6 +46,7 @@
       };
       extraConfig = ''
         let mapleader = " "
+        set noshowmode
         set smarttab
         set tabstop=4
         set softtabstop=4
@@ -54,7 +56,7 @@
         autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
         autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
-        nnoremap / :Lines<CR>
+        nnoremap <leader>/ :Lines<CR>
         nnoremap ff :NERDTreeToggle<CR>
         nnoremap <leader>pp :TlistToggle<CR>
 
@@ -70,7 +72,7 @@
         set splitright
 
         let g:lightline = {
-            \ 'colorscheme': 'apprentice',
+            \ 'colorscheme': 'PaperColor',
             \}
       '';
     };
@@ -134,7 +136,7 @@
         bind -n M-H previous-window
         bind -n M-L next-window
 
-        set -gq status-fg "#111111"
+        set -gq status-fg "#FCFDFE"
         set -gq status-bg "#5E8D87"
         set -gq status-attr "none"
 
@@ -142,46 +144,54 @@
         set -gq window-status-separator ""
         set -gq status-justify centre
 
-        set -gq window-status-current-style "fg=#5E8D87,bold,bg=#111111"
+        set -gq window-status-current-style "fg=#5E8D87,bold,bg=#FCFDFE"
         set -gq window-status-current-format " #I:#W "
-        set -gq pane-active-border-style "fg=#5E8D87, bg=#111111"
+        set -gq pane-active-border-style "fg=#5E8D87, bg=#FCFDFE"
 
-        set -gq pane-border-style "fg=#444444,bg=#111111"
-        set -gq pane-active-border-style "fg=#ee66aa,bg=#111111"
+        set -gq pane-border-style "fg=#444444,bg=#FCFDFE"
+        set -gq pane-active-border-style "fg=#5E8D87,bg=#eeeeec"
         set -gq display-panes-colour "#444444"
         set -gq display-panes-active-colour "#5E8D87"
       '';
     };
+    programs.urxvt = {
+      enable = true;
+      fonts = ["xft:mononoki Nerd Font Mono:style=Regular:size=13"];
+      scroll.bar.enable = false;
+      extraConfig = {
+        internalBorder = 5;
+      };
+    };
     xresources.extraConfig = ''
-    #   !! Colorscheme
-    #   *foreground: #eeffff
-    #   *background: #111111
-    #   !
-    #   ! ! black
-    #   *color0: #111111
-    #   *color8: #444444
-    #   ! ! red
-    #   *color1:#A54242
-    #   *color9: #CC6666
-    #   ! ! green
-    #   *color2: #AAFFAA
-    #   *color10:#55BB55
+      !! Colorscheme
+      *foreground: #eeffff
+      *background: #111111
+      !
+      ! ! black
+      *color0: #111111
+      *color8: #444444
+      ! ! red
+      *color1:#A54242
+      *color9: #CC6666
+      ! ! green
+      *color2: #AAFFAA
+      *color10:#55BB55
       
-    #   ! ! yellow
-    #   *color3: #DE935F
-    #   *color11: #F0C674
-    #   ! ! blue
-    #   *color4: #1188AA
-    #   *color12: #1188AA
-    #   ! ! magenta
-    #   *color5: #85678F
-    #   *color13: #B294BB
-    #   ! ! cyan
-    #   *color6: #5E8D87
-    #   *color14: #8ABEB7
-    #   ! ! white
-    #   *color7: #ffffff
-    #   *color15: #eeffff
-    # '';
+      ! ! yellow
+      *color3: #DE935F
+      *color11: #F0C674
+      ! ! blue
+      *color4: #1188AA
+      *color12: #1188AA
+      ! ! magenta
+      *color5: #85678F
+      *color13: #B294BB
+      ! ! cyan
+      *color6: #5E8D87
+      *color14: #8ABEB7
+      ! ! white
+      *color7: #ffffff
+      *color15: #eeffff
+    '';
   };
 }

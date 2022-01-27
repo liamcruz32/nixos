@@ -4,8 +4,16 @@
   services = {
     xserver = {
       enable = true;
-      desktopManager.xfce.enable = true;
-      desktopManager.xterm.enable = false;
+      displayManager.gdm.enable = true;
+      displayManager.defaultSession = "xfce+openbox";
+      desktopManager = {
+        xterm.enable = false;
+        xfce = {
+          enable = true;
+          enableXfwm = false;
+        };
+      };
+      windowManager.openbox.enable = true;
     };
   };
   environment.systemPackages = with pkgs; [
@@ -16,5 +24,12 @@
     gruvbox-dark-gtk
     luna-icons
     zafiro-icons
+    openbox-menu
+    obconf
+    tint2
+    nitrogen
+    lxappearance
+    rofi
+    eww
   ];
 }

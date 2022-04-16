@@ -20,8 +20,8 @@
       desktopManager.xterm.enable = false;
       resolutions = [
         {
-          x = 1368;
-          y = 768;
+          x = 1280;
+          y = 720;
         }
       ];
       windowManager.i3 = {

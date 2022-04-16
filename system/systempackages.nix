@@ -2,17 +2,8 @@
 
 {
   environment.systemPackages = with pkgs; [
-    # Utilities
-    ############
-    gnupg git gnumake xorg.xev wget
-
-    # Tools
-    ########
+    gnupg git gnumake wget curl
     tmux vim p7zip rxvt-unicode
-  ];
-
-  nixpkgs.config.permittedInsecurePackages = [
-    "ffmpeg-3.4.8"
   ];
 
 }

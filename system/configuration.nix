@@ -10,11 +10,10 @@
      
       # WM Nixfiles
       ##############
-      ./wm/gnome.nix
+      ./wm/i3.nix
 
       # User Accounts
       ################
-      ./users/admin.nix
       ./users/liam.nix
 
     ];
@@ -93,6 +92,7 @@
   ####################
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
+  systemd.services.systemd-user-sessions.enable = false;
   networking.useDHCP = false;
   networking.interfaces.enp0s25.useDHCP = false;
   networking.interfaces.wlp3s0.useDHCP = true;

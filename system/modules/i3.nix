@@ -1,22 +1,27 @@
 { config, pkgs, callPackage, ... }: 
 
 {
-  programs.nm-applet.enable = true;
-  environment.pathsToLink = [ "/libexec" ];
-  environment.systemPackages = with pkgs; [
-    playerctl
-    lxappearance
-    parted
-    acpi
-    rofi
-    pulseaudio
-    pavucontrol
-    nitrogen
-  ];
+  programs = {
+    nm-applet.enable = true;
+  };
+
+  environment = {
+    pathsToLink = [ "/libexec" ];
+    systemPackages = with pkgs; [
+      playerctl lxappearance acpi dunst
+      rofi pavucontrol nitrogen firefox
+      xfce.thunar alacritty
+    ];
+  };
 
   services = {
     picom.enable = true;
+    openssh.enable = true;
+    gnome.gnome-keyring.enable = true;
     xserver = {
+      enable = true;
+      layout = "us";
+      libinput.enable = true;
       desktopManager.xterm.enable = false;
       resolutions = [
         {
@@ -35,5 +40,5 @@
       };
     };
   };
-}
+}  
 

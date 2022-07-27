@@ -1,9 +1,11 @@
 { config, pkgs, ... }:
 
 {
+  system.stateVersion = "20.09"; 
+
   imports =
     [ 
-      <home-manager/nixos>
+      ./enableFlakes.nix
       ./hardware-configuration.nix
 
       ./modules/core.nix
@@ -18,5 +20,4 @@
     extraGroups = ["wheel" "networkmanager" "audio" "video"];
   };
 
-  system.stateVersion = "20.09"; 
 }

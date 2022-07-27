@@ -1,13 +1,15 @@
 {
-  description = "Configuration flake";
+  description = "My nix configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = {home-manager, nixpkgs, ... }: 
+  outputs = {nixpkgs, home-manager, ... }:
   let
     system = "x86_64-linux";
 
@@ -22,17 +24,34 @@
 
   in {
     nixosConfigurations = {
-      nixos = lib.nixosSystem {
+      hammer = lib.nixosSystem {
         inherit system;
         modules = [
           ./system/configuration.nix
-          home-manager.nixosModules.home-manager
-          {
+
+          home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
+            home-manager.users.liam = {
+              imports = [ (./users/liam/home.nix) ];
+            };
           }
+
         ];
       };
     };
+
+    # homeManagerConfiguration = {
+    #   liam = home-manager.lib.homeManagerConfiguration {
+    #     inherit system pkgs;
+    #     username = liam;
+    #     homeDirectory = /home/liam;
+    #     configuration = {
+    #       imports = [
+    #         ./users/liam/home.nix
+    #       ];
+    #     };
+    #   };
+    # };
   };
 }

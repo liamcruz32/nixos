@@ -12,6 +12,7 @@
       vim-nix
       fzf-vim
       papercolor-theme
+      vim-latex-live-preview
     ];
     settings = {
       expandtab = true;
@@ -39,10 +40,14 @@
       set foldmethod=indent
       set foldlevel=99
 
+      inoremap jh <Esc>
+
       nnoremap <C-J> <C-W><C-J>
       nnoremap <C-K> <C-W><C-K>
       nnoremap <C-L> <C-W><C-L>
       nnoremap <C-H> <C-W><C-H>
+      nnoremap <A-H> :gT<CR>
+      nnoremap <A-L> :gt<CR>
 
       set splitbelow
       set splitright

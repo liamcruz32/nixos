@@ -23,12 +23,12 @@ filebrowser {
 @theme "/dev/null"
 
 * {
-  bg: #303030;
-  bgAlt: #3b3b3b;
-  fg: #88C0D0;
+  bg: #20201d;
+  bgAlt: #303030;
+  fg: #CE7300;
   button: #3b3b3b;
   background-color: @bg;
-  text-color: @fg;
+  text-color: #eeeeee;
   }
 
 mainbox { children: [ mode-switcher, inputbar, listview ]; }
@@ -36,10 +36,10 @@ mainbox { children: [ mode-switcher, inputbar, listview ]; }
 window {
   transparency:     "real";
   width:            650px;
-  border-radius:	3px;
+  border-radius:	0px;
   height:           500px;
-  border:           12px;
-  border-color:     @bg;
+  border:           3px;
+  border-color:     @fg;
 }
 
 inputbar {

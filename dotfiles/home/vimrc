@@ -1,0 +1,152 @@
+" BASIC SETTINGS  ---------------------------------------------------------------- {{{
+filetype on
+filetype plugin on
+filetype indent on
+syntax on
+let mapleader=" "
+set number relativenumber
+set cursorline
+set tabstop=4
+set expandtab
+set ignorecase
+set showcmd
+set foldmethod=indent
+set foldlevel=99
+set laststatus=2
+set noshowmode
+set noeb vb t_vb=
+au GUIEnter * set vb t_vb
+let g:python_highlight_all = 1
+set mouse=a
+
+
+" }}}
+
+
+" PLUGINS ---------------------------------------------------------------- {{{
+call plug#begin('~/.vim/plugged')
+    " Utilities ------------------------------
+    Plug 'bagrat/vim-buffet'
+    Plug 'preservim/nerdtree'
+    Plug 'preservim/vimux'
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-fugitive'
+    " Language -------------------------------
+    Plug 'LnL7/vim-nix'
+    Plug 'vim-python/python-syntax'
+    Plug 'dense-analysis/ale'
+    " Appearance -----------------------------
+    Plug 'itchyny/lightline.vim'
+    Plug 'chriskempson/base16-vim'
+call plug#end()
+
+let base16colorspace=256
+if exists('$BASE16_THEME')
+      \ && (!exists('g:colors_name') || g:colors_name != 'base16-$BASE16_THEME')
+    let base16colorspace=256
+    colorscheme base16-$BASE16_THEME
+endif
+
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+
+" }}}
+
+
+" MAPPINGS --------------------------------------------------------------- {{{
+
+nnoremap <C-q> :q<CR>
+nnoremap <silent><leader>f :NERDTreeToggle<CR>
+nnoremap <leader>vp :VimuxPromptCommand<CR>
+inoremap kk <esc>
+inoremap jj <esc>
+
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+
+nnoremap <silent><leader>1 1gt<CR>
+nnoremap <silent><leader>2 2gt<CR>
+nnoremap <silent><leader>3 3gt<CR>
+nnoremap <silent><leader>4 4gt<CR>
+nnoremap <silent><leader>5 5gt<CR>
+nnoremap <silent><leader>6 6gt<CR>
+nnoremap <silent><leader>7 7gt<CR>
+nnoremap <silent><leader>8 8gt<CR>
+nnoremap <silent><leader>9 9gt<CR>
+
+nnoremap <C-n> :tabnew 
+
+set splitbelow
+set splitright
+
+" }}}
+
+
+" VIMSCRIPT -------------------------------------------------------------- {{{
+
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+" }}}
+
+
+" STATUS LINE ------------------------------------------------------------ {{{
+let g:rehash256 = 1
+let g:lightline = {
+      \ 'colorscheme': 'seoul256'
+      \ }
+let s:palette = g:lightline#colorscheme#{g:lightline.colorscheme}#palette
+let s:palette.normal.middle = [ [ 'NONE', 'NONE', 'NONE', 'NONE' ] ]
+let s:palette.inactive.middle = s:palette.normal.middle
+let s:palette.tabline.middle = s:palette.normal.middle
+
+" Show Index numbers on tab
+if exists("+showtabline")
+    function! MyTabLine()
+        let s = ''
+        let wn = ''
+        let t = tabpagenr()
+        let i = 1
+        while i <= tabpagenr('$')
+            let buflist = tabpagebuflist(i)
+            let winnr = tabpagewinnr(i)
+            let s .= '%' . i . 'T'
+            let s .= (i == t ? '%1*' : '%2*')
+            let s .= ' '
+            let wn = tabpagewinnr(i,'$')
+
+            let s .= '%#TabNum#'
+            let s .= i
+            " let s .= '%*'
+            let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
+            let bufnr = buflist[winnr - 1]
+            let file = bufname(bufnr)
+            let buftype = getbufvar(bufnr, 'buftype')
+            if buftype == 'nofile'
+                if file =~ '\/.'
+                    let file = substitute(file, '.*\/\ze.', '', '')
+                endif
+            else
+                let file = fnamemodify(file, ':p:t')
+            endif
+            if file == ''
+                let file = '[No Name]'
+            endif
+            let s .= ' ' . file . ' '
+            let i = i + 1
+        endwhile
+        let s .= '%T%#TabLineFill#%='
+        let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
+        return s
+    endfunction
+    set stal=2
+    set tabline=%!MyTabLine()
+    set showtabline=1
+    highlight link TabNum Special
+endif
+
+" }}}

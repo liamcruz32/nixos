@@ -1,0 +1,49 @@
+export PS1="\[\033[0;37m\]\342\224\214\342\224\200$([[ $? != 0 ]] && echo "[\[\033[0;31m\]\342\234\227\[\033[0;37m\]]\342\224\200")[\[\033[0;33m\]\u\[\033[0;37m\]@\[\033[0;96m\]\h\[\033[0;37m\]]\342\224\200[\[\033[0;37m\]\w\[\033[0;37m\]]\n\[\033[0;37m\]\342\224\224\342\224\200\342\224\200\342\225\274 \[\033[0m\]"
+
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        source "$BASE16_SHELL/profile_helper.sh"
+base16_material
+
+if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
+        tmux new-session -A -s hammer
+fi
+
+
+export VISUAL=vim
+export EDITOR="$VISUAL"
+export LANG=en_US.UTF-8
+
+alias ls='ls --color=auto'
+alias la='ls -a'
+alias ll='ls -lh'
+
+alias mv='mv -v'
+alias cp='cp -v'
+alias mkdir='mkdir -pv'
+
+alias ..='cd ..'
+function cd_up() {
+    cd $(printf "%.s../" $(seq "$1"));
+}
+alias up="cd_up"
+
+alias install='sudo nixos-rebuild switch -I nixos-config=/home/liamcruz/nixos/configuration.nix'
+alias update='sudo nixos-rebuild switch -I nixos-config=/home/liamcruz/nixos/configuration.nix --upgrade'
+
+cfp() {
+    scp  -P 23515 -r root@roguearcade.duckdns.org:$1 $2
+}
+c2p() {
+    scp  -P 23515 -r $1 root@roguearcade.duckdns.org:$2
+}
+
+alias piadmin='ssh root@roguearcade.duckdns.org -p 23515'
+alias pirogue='ssh play@roguearcade.duckdns.org -p 23515'
+alias pispot='ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i ~/.ssh/id_rsa spot@roguearcade.duckdns.org -p 23515'
+alias crawls='ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -i ~/.ssh/crawl_key joshua@crawl.akrasiac.org'
+
+alias attach='tmux attach'
+alias detach='tmux detach'
+alias new='tmux new-session -d -s'

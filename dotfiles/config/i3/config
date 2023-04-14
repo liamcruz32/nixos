@@ -1,0 +1,222 @@
+#######################
+## MY i3 CONFIG FILE ##
+#######################
+set $mod Mod4
+font pango: Noto Sans Regular 10
+focus_follows_mouse no
+
+## AUTOSTART APPLICATIONS ##
+############################
+exec_always --no-startup-id picom
+exec_always --no-startup-id nitrogen --restore
+exec_always --no-startup-id ~/.config/polybar/polybar.sh
+exec_always --no-startup-id caffeine
+
+exec --no-startup-id dex --autostart --environment i3
+exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id xset s 480 dpms 600 600 600
+exec --no-startup-id dbus-launch dunst --config ~/.config/dunst/dunstrc
+
+exec --no-startup-id ~/.screenlayout/monitor.sh
+
+
+######################
+## WORKSPACE LAYOUT ##
+######################
+
+workspace_layout tabbed
+
+bindsym $mod+Shift+f fullscreen toggle
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+
+###################
+##  MODE ##
+###################
+
+floating_modifier $mod
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+
+## floating rules 
+####################################
+
+for_window [class="gnome-calculator"] floating enable
+for_window [class="Blueman-manager" instance="blueman-manager"] floating enable
+for_window [class="Gpick" instance="gpick"] floating enable
+for_window [class="Pavucontrol" instance="pavucontrol"] floating enable
+for_window [class="Protonvpn"] floating enable
+for_window [window_role="About"] floating enable
+for_window [title="Steam - News"] floating enable
+for_window [title="Friends List"] floating enable
+
+for_window [class="Xfce4-terminal"] fullscreen enable
+
+#####################
+## WORKSPACE RULES ##
+#####################
+
+## WORKSPACE OUTPUT
+##############################
+# workspace $ws1 output VGA-0
+# workspace $ws2 output VGA-0
+# workspace $ws3 output HDMI-0
+# workspace $ws4 output HDMI-0
+# workspace $ws5 output HDMI-0
+
+## WORKSPACE NAMES
+#################################
+set $ws1 "1:"
+set $ws2 "2:"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+
+## SET APPLICATIONS TO OPEN ON SPECIFIC WORKSPACE
+#################################################
+assign [class="(?i)firefox"] $ws2
+assign [class=Xfce4-terminal] $ws1
+
+for_window [class=Xfce4-terminal] focus
+for_window [class=firefox] focus
+
+
+#################################
+## WINDOW NAVIGATION AND FOCUS ##
+#################################
+
+## SWITCH TO WORKSPACE
+#################################
+bindsym $mod+1    workspace  $ws1
+bindsym $mod+2    workspace  $ws2
+bindsym $mod+3    workspace  $ws3
+bindsym $mod+4    workspace  $ws4
+bindsym $mod+5    workspace  $ws5
+
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+## MOVE FOCUSED CONTAINER TO WORKSPACE
+#########################################################
+bindsym $mod+Shift+1    move container to workspace  $ws1
+bindsym $mod+Shift+2    move container to workspace  $ws2
+bindsym $mod+Shift+3    move container to workspace  $ws3
+bindsym $mod+Shift+4    move container to workspace  $ws4
+bindsym $mod+Shift+5    move container to workspace  $ws5
+
+## CHANGE FOCUS 
+#########################
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+## MOVE FOCUSED WINDOW 
+##############################
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+## SPLIT CONTAINER
+############################
+bindsym $mod+Shift+s split h
+bindsym $mod+s split v
+
+
+##########################
+## FUNCTION KEYBINDINGS ##
+##########################
+
+bindsym $mod+Shift+q kill
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+bindsym $mod+Shift+e exec ~/.config/i3/scripts/powermenu
+bindsym $mod+p exec --no-startup-id ~/.config/i3/scripts/blur-lock
+bindsym $mod+Shift+p exec ~/.config/i3/scripts/power-profiles
+
+bindsym XF86AudioRaiseVolume exec amixer -D pulse sset Master 5%+ && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioLowerVolume exec amixer -D pulse sset Master 5%- && pkill -RTMIN+1 i3blocks
+bindsym XF86AudioMute exec amixer sset Master toggle && killall -USR1 i3blocks
+
+bindsym XF86MonBrightnessUp exec xbacklight +5 && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
+bindsym XF86MonBrightnessDown exec xbacklight -5 && notify-send "Brightness - $(xbacklight -get | cut -d '.' -f 1)%"
+bindsym Print exec scrot ~/Pictures/screenshots/%Y-%m-%d-%T-screenshot.png && notify-send "Screenshot saved as $(date +"%Y-%m-%d-%T")-screenshot.png"
+
+
+###########################
+## APPLICATION SHORTCUTS ##
+###########################
+
+bindsym $mod+b exec --no-startup-id /usr/bin/firefox
+bindsym $mod+f exec --no-startup-id /usr/bin/thunar
+bindsym $mod+m exec --no-startup-id /usr/bin/thunderbird
+bindsym $mod+Return exec --no-startup-id xfce4-terminal
+
+bindsym $mod+d exec rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+
+###################################
+## COLOR AND APPEARANCE SETTINGS ##
+###################################
+
+new_window pixel 3
+# gaps inner 6
+# gaps outer 3
+
+set $Black                          #263238
+set $Red                            #EC5F67
+set $Green                          #8BD649
+set $Yellow                         #FFCC00
+set $Blue                           #485e94
+set $Magenta                        #82AAFF
+set $Cyan                           #80CBC4
+set $White                          #E7E8EB
+set $BBlack                         #707880
+set $BWhite                         #FFFFFF 
+set $frame                          #485e94
+
+## CLASS	           	    BORDER      BGROUND		TEXT		INDICATOR   	CHILD_BORDER
+############################################################################################
+client.focused		        $BWhite     $BWhite    $Black  	$BWhite	        $BWhite
+client.unfocused	    	$White      $White      $BBlack     $White          $White
+client.focused_inactive		$Black      $Black	    $White      $Black	        $Black
+client.urgent		    	$Red    	$Red	    $white		$Yellow	        $Yellow
+
+
+#########################
+## STATUS BAR SETTINGS ##
+#########################
+
+#bar {
+#    font pango: Noto Sans Regular 11
+#    status_command i3blocks -c ~/.config/i3/i3blocks.conf
+#    position top
+#    tray_padding 2
+#    strip_workspace_numbers yes
+
+#    colors {
+#        separator          $Magenta
+#		background         $White
+#		statusline         #111111
+
+#        ## CLASS       		BORDER 		        BG		    TEXT	    INDICATOR
+#        ##########################################################################
+#		focused_workspace	$White	   	        $Blue		$White	    $Magenta
+#		active_workspace	$White          	$Blue     	$White  	$Magenta
+#		inactive_workspace	$White         		$White	    $Black		$Magenta
+#		urgent_workspace	$Red    	    	$Red       	$White		$Magenta
+#	}
+#}
+

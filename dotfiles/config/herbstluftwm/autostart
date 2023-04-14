@@ -1,0 +1,203 @@
+#!/usr/bin/env bash
+
+# this is a simple config for herbstluftwm
+
+hc() {
+    herbstclient "$@"
+}
+
+hc emit_hook reload
+xsetroot -solid '#5A8E3A'
+hc keyunbind --all
+Mod=Mod4
+
+## AUTOSTART
+#############
+~/.screenlayout/monitor.sh
+nitrogen --restore &
+pgrep picom || picom -b &
+pgrep nm-applet || nm-applet &
+pgrep caffeine || caffeine &
+pgrep blueman-applet || blueman-applet &
+pgrep dunst || dunst &
+
+## KEYBINDINGS
+################
+
+hc keybind $Mod-Shift-e spawn ~/.config/rofi/powermenu
+hc keybind $Mod-Shift-r reload
+
+hc keybind $Mod-Shift-q remove
+hc keybind $Mod-q close
+
+hc keybind $Mod-Return spawn alacritty
+hc keybind $Mod-b spawn firefox
+hc keybind $Mod-f spawn thunar
+hc keybind $Mod-d spawn rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+
+hc keybind XF86AudioRaiseVolume spawn pactl set-sink-volume @DEFAULT_SINK@ +5%
+hc keybind XF86AudioLowerVolume spawn pactl set-sink-volume @DEFAULT_SINK@ -5%
+hc keybind XF86AudioMute spawn pactl set-sink-mute @DEFAULT_SINK@ toggle
+hc keybind Print spawn scrot $HOME/Pictures/screenshots/%Y-%m-%d-%T-screenshot.png 
+
+## NAVIGATION
+###############
+hc keybind $Mod-h     focus left
+hc keybind $Mod-j     focus down
+hc keybind $Mod-k     focus up
+hc keybind $Mod-l     focus right
+
+hc keybind $Mod-Shift-h     shift left
+hc keybind $Mod-Shift-j     shift down
+hc keybind $Mod-Shift-k     shift up
+hc keybind $Mod-Shift-l     shift right
+
+hc keybind $Mod-u       split   bottom  0.5
+hc keybind $Mod-o       split   right   0.5
+
+resizestep=0.02
+hc keybind $Mod-Control-h       resize left +$resizestep
+hc keybind $Mod-Control-j       resize down +$resizestep
+hc keybind $Mod-Control-k       resize up +$resizestep
+
+# tags
+tag_names=( {1..9} )
+tag_keys=( {1..9} 0 )
+
+hc rename default "${tag_names[0]}" || true
+for i in "${!tag_names[@]}" ; do
+    hc add "${tag_names[$i]}"
+    key="${tag_keys[$i]}"
+    if [ -n "$key" ] ; then
+        hc keybind "$Mod-$key" use_index "$i"
+        hc keybind "$Mod-Shift-$key" move_index "$i"
+    fi
+done
+
+# cycle through tags
+hc keybind $Mod-period use_index +1 --skip-visible
+hc keybind $Mod-comma  use_index -1 --skip-visible
+
+# layouting
+hc keybind $Mod-s floating toggle
+hc keybind $Mod-Shift-f fullscreen toggle
+hc keybind $Mod-p pseudotile toggle
+hc keybind $Mod-space                                                           \
+            or , and . compare tags.focus.curframe_wcount = 2                   \
+                     . cycle_layout +1 vertical horizontal max vertical grid    \
+               , cycle_layout +1
+
+# mouse
+hc mouseunbind --all
+hc mousebind $Mod-Button1 move
+hc mousebind $Mod-Button2 zoom
+hc mousebind $Mod-Button3 resize
+
+# focus
+hc keybind $Mod-BackSpace   cycle_monitor
+hc keybind $Mod-Tab         cycle_all +1
+hc keybind $Mod-Shift-Tab   cycle_all -1
+hc keybind $Mod-c cycle
+hc keybind $Mod-i jumpto urgent
+
+## THEME
+##########
+
+black="#263238" # Base 00 - Black
+red="#EC5F67" # Base 08 - Red
+green="#8BD649" # Base 0B - Green
+yellow="#FFCC00" # Base 0A - Yellow
+blue="#89DDFF" # Base 0D - Blue
+magenta="#82AAFF" # Base 0E - Magenta
+cyan="#80CBC4" # Base 0C - Cyan
+white="#e7e8eb" # Base 05 - White
+bblack="#707880" # Base 03 - Bright Black
+bwhite="#FFFFFF"
+
+## THEME
+##########
+hc attr theme.tiling.reset 1
+hc attr theme.floating.reset 1
+
+# Titles
+##########
+# hc attr theme.title_height 10
+# hc attr theme.title_when monocle
+# hc attr theme.title_font 'Dejavu Sans:pixelsize=12'  # example using Xft
+# hc attr theme.title_depth 3  # space below the title's baseline
+
+# Frame
+#########
+hc set show_frame_decorations 'focused_if_multiple'
+hc set frame_bg_transparent on
+hc set frame_border_width 2
+hc set frame_transparent_width 3
+hc set frame_gap 6
+
+hc set frame_border_active_color $white
+hc set frame_bg_active_color $bwhite
+
+hc set frame_border_normal_color $bblack
+hc set frame_bg_normal_color $bblack
+
+
+hc attr theme.active.color $bwhite
+hc attr theme.title_color $bwhite
+hc attr theme.normal.color $bblack
+hc attr theme.urgent.color $red
+hc attr theme.tab_color $white
+hc attr theme.active.tab_color $blue
+hc attr theme.active.tab_outer_color $blue
+hc attr theme.active.tab_title_color $black
+hc attr theme.normal.title_color $bblack
+
+hc attr theme.inner_width 0
+hc attr theme.inner_color $white
+hc attr theme.border_width 3
+hc attr theme.floating.border_width 3
+hc attr theme.floating.outer_width 0
+hc attr theme.floating.outer_color $black
+hc attr theme.active.inner_color $bwhite
+hc attr theme.urgent.inner_color $red
+hc attr theme.normal.inner_color $bblack
+# copy inner color to outer_color
+for state in active urgent normal ; do
+    hc substitute C theme.${state}.inner_color \
+        attr theme.${state}.outer_color C
+done
+
+hc attr theme.tiling.outer_width 1
+hc attr theme.background_color '#141414'
+
+hc set window_gap 0
+hc set frame_padding 0
+hc set smart_window_surroundings off
+hc set smart_frame_surroundings on
+hc set mouse_recenter_gap 0
+
+# rules
+hc unrule -F
+hc rule focus=on # normally focus new clients
+hc rule floatplacement=none
+
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
+hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
+hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+hc rule class=Blueman-manager floating=on
+hc rule fixedsize floating=on
+
+hc set tree_style '╾│ ├└╼─┐'
+hc unlock
+
+# do multi monitor setup here, e.g.:
+# hc set_monitors 1280x1024+0+0 1280x1024+1280+0
+# or simply:
+hc detect_monitors
+
+# find the panel
+panel=~/.config/herbstluftwm/panel.sh
+[ -x "$panel" ] || panel=/etc/xdg/herbstluftwm/panel.sh
+for monitor in $(hc list_monitors | cut -d: -f1) ; do
+    # start it on each monitor
+    "$panel" "$monitor" &
+done
